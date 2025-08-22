@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Card, 
   CardContent, 
@@ -31,6 +31,8 @@ import {
 } from '@tabler/icons-react';
 import { useTodayAnimals } from '@/hooks';
 import { useZones } from '@/hooks';
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '@/lib/firebase';
 
 const AnimalsGrid = () => {
   const { animals, loading } = useTodayAnimals();
@@ -41,6 +43,31 @@ const AnimalsGrid = () => {
   const [zoneFilter, setZoneFilter] = useState('all');
   const [selectedAnimal, setSelectedAnimal] = useState<any>(null);
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
+  const [imageUrls, setImageUrls] = useState<Record<string, string>>({});
+
+  // Procesar URLs de imágenes cuando cambien los animales
+  useEffect(() => {
+    const processImageUrls = async () => {
+      if (!animals || animals.length === 0) return;
+      
+      const newImageUrls: Record<string, string> = {};
+      
+      for (const animal of animals) {
+        if (animal.imageUrl) {
+          const processedUrl = await getImageUrl(animal.imageUrl);
+          if (processedUrl) {
+            newImageUrls[animal.imageUrl] = processedUrl;
+          }
+        }
+      }
+      
+      if (Object.keys(newImageUrls).length > 0) {
+        setImageUrls(prev => ({ ...prev, ...newImageUrls }));
+      }
+    };
+
+    processImageUrls();
+  }, [animals]);
 
   // Función para obtener el nombre del tipo de animal
   const getAnimalTypeName = (type: string) => {
@@ -106,7 +133,7 @@ const AnimalsGrid = () => {
   };
 
   // Función para convertir URL de Firebase Storage a URL de descarga
-  const getImageUrl = (imageUrl: string) => {
+  const getImageUrl = async (imageUrl: string) => {
     if (!imageUrl) return '';
     
     // Si ya es una URL HTTP/HTTPS, devolverla tal como está
@@ -114,12 +141,21 @@ const AnimalsGrid = () => {
       return imageUrl;
     }
     
-    // Si es una URL de Firebase Storage (gs://), convertirla
+    // Si es una URL de Firebase Storage (gs://), usar el SDK
     if (imageUrl.startsWith('gs://')) {
-      // Extraer el path del bucket
-      const path = imageUrl.replace('gs://aerosentinel-f6d8f.firebasestorage.app/', '');
-      // Construir la URL de descarga pública
-      return `https://firebasestorage.googleapis.com/v0/b/aerosentinel-f6d8f.appspot.com/o/${encodeURIComponent(path)}?alt=media`;
+      try {
+        // Extraer el path del bucket
+        const path = imageUrl.replace('gs://aerosentinel-f6d8f.firebasestorage.app/', '');
+        // Crear referencia al archivo
+        const storageRef = ref(storage, path);
+        // Obtener URL de descarga
+        const downloadURL = await getDownloadURL(storageRef);
+        return downloadURL;
+      } catch (error) {
+        console.error('Error getting download URL:', error);
+        // En caso de error, devolver una cadena vacía para que se muestre el icono por defecto
+        return '';
+      }
     }
     
     return imageUrl;
@@ -271,10 +307,10 @@ const AnimalsGrid = () => {
                         justifyContent: 'center'
                       }}
                     >
-                      {animal.imageUrl ? (
-                        <img
-                          src={getImageUrl(animal.imageUrl)}
-                          alt={`${getAnimalTypeName(animal.type)}`}
+                                             {animal.imageUrl ? (
+                         <img
+                           src={imageUrls[animal.imageUrl]}
+                           alt={`${getAnimalTypeName(animal.type)}`}
                           style={{
                             width: '100%',
                             height: '100%',
@@ -388,10 +424,10 @@ const AnimalsGrid = () => {
             </DialogTitle>
             <DialogContent>
               <Box sx={{ mb: 2 }}>
-                {selectedAnimal.imageUrl && (
-                  <img
-                    src={getImageUrl(selectedAnimal.imageUrl)}
-                    alt={`${getAnimalTypeName(selectedAnimal.type)}`}
+                                 {selectedAnimal.imageUrl && imageUrls[selectedAnimal.imageUrl] && (
+                   <img
+                     src={imageUrls[selectedAnimal.imageUrl]}
+                     alt={`${getAnimalTypeName(selectedAnimal.type)}`}
                     style={{
                       width: '100%',
                       maxHeight: 400,
