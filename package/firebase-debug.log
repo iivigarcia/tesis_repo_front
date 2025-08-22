@@ -1,0 +1,69 @@
+[debug] [2025-08-20T17:32:06.844Z] ----------------------------------------------------------------------
+[debug] [2025-08-20T17:32:06.847Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\ivang\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2025-08-20T17:32:06.848Z] CLI Version:   14.5.1
+[debug] [2025-08-20T17:32:06.848Z] Platform:      win32
+[debug] [2025-08-20T17:32:06.848Z] Node Version:  v20.10.0
+[debug] [2025-08-20T17:32:06.848Z] Time:          Wed Aug 20 2025 13:32:06 GMT-0400 (Eastern Daylight Time)
+[debug] [2025-08-20T17:32:06.848Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-20T17:32:07.215Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-08-20T17:32:07.215Z] > authorizing via signed-in user (ivangarcia354@gmail.com)
+[debug] [2025-08-20T17:32:07.215Z] [iam] checking project aerosentinel-f6d8f for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-08-20T17:32:07.226Z] Checked if tokens are valid: true, expires at: 1755714583898
+[debug] [2025-08-20T17:32:07.227Z] Checked if tokens are valid: true, expires at: 1755714583898
+[debug] [2025-08-20T17:32:07.229Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/aerosentinel-f6d8f:testIamPermissions [none]
+[debug] [2025-08-20T17:32:07.230Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/aerosentinel-f6d8f:testIamPermissions x-goog-quota-user=projects/aerosentinel-f6d8f
+[debug] [2025-08-20T17:32:07.231Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aerosentinel-f6d8f:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-08-20T17:32:07.550Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/aerosentinel-f6d8f:testIamPermissions 200
+[debug] [2025-08-20T17:32:07.550Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/aerosentinel-f6d8f:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-08-20T17:32:07.551Z] Checked if tokens are valid: true, expires at: 1755714583898
+[debug] [2025-08-20T17:32:07.551Z] Checked if tokens are valid: true, expires at: 1755714583898
+[debug] [2025-08-20T17:32:07.551Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/aerosentinel-f6d8f [none]
+[debug] [2025-08-20T17:32:07.783Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/aerosentinel-f6d8f 200
+[debug] [2025-08-20T17:32:07.783Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/aerosentinel-f6d8f {"projectId":"aerosentinel-f6d8f","projectNumber":"608599082935","displayName":"aerosentinel","name":"projects/aerosentinel-f6d8f","resources":{"hostingSite":"aerosentinel-f6d8f"},"state":"ACTIVE","etag":"1_f8c9f793-29a1-408a-8dc0-07c18fc81ac5"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 15.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2025-08-20T17:32:29.067Z] Checked if tokens are valid: true, expires at: 1755714583898
+[debug] [2025-08-20T17:32:29.067Z] Checked if tokens are valid: true, expires at: 1755714583898
+[debug] [2025-08-20T17:32:29.067Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/aerosentinel-f6d8f/sites/aerosentinel-f6d8f [none]
+[debug] [2025-08-20T17:32:29.446Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/aerosentinel-f6d8f/sites/aerosentinel-f6d8f 200
+[debug] [2025-08-20T17:32:29.446Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/aerosentinel-f6d8f/sites/aerosentinel-f6d8f {"name":"projects/aerosentinel-f6d8f/sites/aerosentinel-f6d8f","defaultUrl":"https://aerosentinel-f6d8f.web.app","appId":"1:608599082935:web:7a1355053f7a6ade678a32","type":"DEFAULT_SITE"}
+[info]    ▲ Next.js 15.3.2
+
+[info]    - Environments: .env.local
+
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully in 48s
+
+[info]    Linting and checking validity of types ...
+
+[info] Failed to compile.
+
+
+[info] ./src/hooks/useDashboardMetrics.ts:178:43
+Type error: Property 'get' does not exist on type 'DocumentReference<DocumentData, DocumentData>'.
+
+  176 |       const metricsRef = doc(db, COLLECTIONS.DASH_METRICS, 'current');
+  177 |       // Primero obtenemos el valor actual
+> 178 |       const currentDoc = await metricsRef.get();
+      |                                           ^
+  179 |       if (currentDoc.exists()) {
+  180 |         const currentData = currentDoc.data() as DashboardMetrics;
+  181 |         const currentValue = currentData.todayCounts?.[countType] || 0;
+
+[info] Next.js build worker exited with code: 1 and signal: null
+
+[debug] [2025-08-20T17:34:10.190Z] Error: ENOENT: no such file or directory, open 'C:\Users\ivang\OneDrive\Desktop\tesis_front_v2\Modernize-Nextjs-Free\package\.next\export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.

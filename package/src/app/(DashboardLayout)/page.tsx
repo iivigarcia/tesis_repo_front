@@ -2,55 +2,60 @@
 import { Grid, Box } from '@mui/material';
 import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
 // components
-import SalesOverview from '@/app/(DashboardLayout)/components/dashboard/SalesOverview';
-import YearlyBreakup from '@/app/(DashboardLayout)/components/dashboard/YearlyBreakup';
-import RecentTransactions from '@/app/(DashboardLayout)/components/dashboard/RecentTransactions';
-import ProductPerformance from '@/app/(DashboardLayout)/components/dashboard/ProductPerformance';
-import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
-import MonthlyEarnings from '@/app/(DashboardLayout)/components/dashboard/MonthlyEarnings';
+import SummaryCards from '@/app/(DashboardLayout)/components/dashboard/SummaryCards';
+import RouteProgress from '@/app/(DashboardLayout)/components/dashboard/RouteProgress';
+import BatteryLevel from '@/app/(DashboardLayout)/components/dashboard/BatteryLevel';
+import PatrolledZones from '@/app/(DashboardLayout)/components/dashboard/PatrolledZones';
+import ZonePatrol from '@/app/(DashboardLayout)/components/dashboard/ZonePatrol';
+import ZoneAlerts from '@/app/(DashboardLayout)/components/dashboard/ZoneAlerts';
 
 const Dashboard = () => {
   return (
-    <PageContainer title="Dashboard" description="this is Dashboard">
+    <PageContainer title="AeroSentinel Dashboard" description="Dashboard de monitoreo de drones">
       <Box>
         <Grid container spacing={3}>
-          <Grid
-            size={{
-              xs: 12,
-              lg: 8
-            }}>
-            <SalesOverview />
-          </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              lg: 4
-            }}>
-            <Grid container spacing={3}>
-              <Grid size={12}>
-                <YearlyBreakup />
-              </Grid>
-              <Grid size={12}>
-                <MonthlyEarnings />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              lg: 4
-            }}>
-            <RecentTransactions />
-          </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              lg: 8
-            }}>
-            <ProductPerformance />
-          </Grid>
+          {/* Top Row - Summary Cards */}
           <Grid size={12}>
-            <Blog />
+            <SummaryCards />
+          </Grid>
+
+          {/* Middle Row - Detailed Metrics */}
+          <Grid
+            size={{
+              xs: 12,
+              lg: 4
+            }}>
+            <RouteProgress />
+          </Grid>
+          <Grid
+            size={{
+              xs: 12,
+              lg: 4
+            }}>
+            <BatteryLevel />
+          </Grid>
+          <Grid
+            size={{
+              xs: 12,
+              lg: 4
+            }}>
+            <PatrolledZones />
+          </Grid>
+
+          {/* Bottom Row - Zone Data */}
+          <Grid
+            size={{
+              xs: 12,
+              lg: 6
+            }}>
+            <ZonePatrol />
+          </Grid>
+          <Grid
+            size={{
+              xs: 12,
+              lg: 6
+            }}>
+            <ZoneAlerts />
           </Grid>
         </Grid>
       </Box>

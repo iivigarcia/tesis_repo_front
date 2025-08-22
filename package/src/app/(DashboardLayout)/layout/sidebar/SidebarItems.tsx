@@ -1,6 +1,6 @@
 import React from "react";
 import Menuitems from "./MenuItems";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Avatar, Badge, IconButton } from "@mui/material";
 import {
   Logo,
   Sidebar as MUI_Sidebar,
@@ -8,22 +8,17 @@ import {
   MenuItem,
   Submenu,
 } from "react-mui-sidebar";
-import { IconPoint } from '@tabler/icons-react';
+import { IconPoint, IconShield, IconUser, IconSettings, IconBell } from '@tabler/icons-react';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Upgrade } from "./Updrade";
 
-
 const renderMenuItems = (items: any, pathDirect: any) => {
-
   return items.map((item: any) => {
-
     const Icon = item.icon ? item.icon : IconPoint;
-
     const itemIcon = <Icon stroke={1.5} size="1.3rem" />;
 
     if (item.subheader) {
-      // Display Subheader
       return (
         <Menu
           subHeading={item.subheader}
@@ -32,7 +27,6 @@ const renderMenuItems = (items: any, pathDirect: any) => {
       );
     }
 
-    //If the item has children (submenu)
     if (item.children) {
       return (
         <Submenu
@@ -46,8 +40,6 @@ const renderMenuItems = (items: any, pathDirect: any) => {
       );
     }
 
-    // If the item has no children, render a MenuItem
-
     return (
       <Box px={3} key={item.id}>
         <MenuItem
@@ -59,31 +51,63 @@ const renderMenuItems = (items: any, pathDirect: any) => {
           component={Link}
         >
           {item.title}
-        </MenuItem >
+          {item.badge && (
+            <Box sx={{ ml: 'auto', mr: 1 }}>
+              <Typography variant="caption" sx={{ 
+                bgcolor: 'primary.main', 
+                color: 'white', 
+                px: 1, 
+                py: 0.5, 
+                borderRadius: 1,
+                fontSize: '0.7rem'
+              }}>
+                {item.badge}
+              </Typography>
+            </Box>
+          )}
+        </MenuItem>
       </Box>
-
     );
   });
 };
-
 
 const SidebarItems = () => {
   const pathname = usePathname();
   const pathDirect = pathname;
 
   return (
-    < >
-      <MUI_Sidebar width={"100%"} showProfile={false} themeColor={"#5D87FF"} themeSecondaryColor={'#49beff'} >
+    <>
+      <MUI_Sidebar width={"100%"} showProfile={false} themeColor={"#5D87FF"} themeSecondaryColor={'#49beff'}>
+        {/* AeroSentinel Logo */}
+        <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <IconShield size={32} color="#5D87FF" />
+          <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#5D87FF' }}>
+            AeroSentinel
+          </Typography>
+        </Box>
 
-        <Logo img='/images/logos/dark-logo.svg' component={Link} to="/" >Modernize</Logo>
+        {/* User Profile and Notifications */}
+        <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+          <Avatar sx={{ width: 32, height: 32, bgcolor: 'grey.300' }}>
+            <IconUser size={20} />
+          </Avatar>
+          <IconButton size="small" sx={{ color: 'grey.600' }}>
+            <IconSettings size={20} />
+          </IconButton>
+          <IconButton size="small" sx={{ color: 'grey.600' }}>
+            <Badge badgeContent={9} color="error">
+              <IconBell size={20} />
+            </Badge>
+          </IconButton>
+        </Box>
 
         {renderMenuItems(Menuitems, pathDirect)}
         <Box px={2}>
           <Upgrade />
         </Box>
       </MUI_Sidebar>
-
     </>
   );
 };
+
 export default SidebarItems;
