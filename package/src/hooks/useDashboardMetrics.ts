@@ -40,45 +40,10 @@ export const useDashboardMetrics = () => {
 };
 
 // Hook para obtener métricas de animales diarias
-export const useAnimalsDaily = (date: string) => {
-  const [animalsData, setAnimalsData] = useState<AnimalsDaily | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!date) {
-      setLoading(false);
-      return;
-    }
-
-    const animalsRef = doc(db, COLLECTIONS.ANIMALS_DAILY, date);
-    const unsubscribe = onSnapshot(
-      animalsRef,
-      (doc) => {
-        if (doc.exists()) {
-          setAnimalsData(doc.data() as AnimalsDaily);
-        } else {
-          setAnimalsData(null);
-        }
-        setLoading(false);
-      },
-      (err) => {
-        setError(err.message);
-        setLoading(false);
-      }
-    );
-
-    return () => unsubscribe();
-  }, [date]);
-
-  return { animalsData, loading, error };
-};
+// Este hook se ha movido a useAnimalsDaily.ts para evitar conflictos
 
 // Hook para obtener métricas de animales de hoy
-export const useTodayAnimals = () => {
-  const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  return useAnimalsDaily(today);
-};
+// Este hook se ha movido a useAnimalsDaily.ts para evitar conflictos
 
 // Funciones para actualizar métricas del dashboard
 export const useDashboardOperations = () => {
@@ -209,14 +174,15 @@ export const useDashboardOperations = () => {
 // Hook para obtener estadísticas resumidas
 export const useDashboardStats = () => {
   const { metrics, loading: metricsLoading, error: metricsError } = useDashboardMetrics();
-  const { animalsData, loading: animalsLoading, error: animalsError } = useTodayAnimals();
+  // Importar el hook desde el archivo correcto
+  const { animalsDaily, loading: animalsLoading, error: animalsError } = require('./useAnimalsDaily').useAnimalsDaily();
 
   const loading = metricsLoading || animalsLoading;
   const error = metricsError || animalsError;
 
   const stats = {
-    totalAnimals: animalsData?.totalAnimals || 0,
-    animalsGrowth: animalsData?.growthPct || 0,
+    totalAnimals: animalsDaily?.totalAnimals || 0,
+    animalsGrowth: animalsDaily?.growthPct || 0,
     currentPatrol: metrics?.currentPatrol || null,
     batteries: metrics?.batteries || {},
     alertsByZone: metrics?.alertsByZone || {},

@@ -8,6 +8,7 @@ import {
   IconSettings,
   IconBell,
   IconUser,
+  IconPaw,
 } from "@tabler/icons-react";
 
 import { uniqueId } from "lodash";
@@ -30,6 +31,12 @@ const Menuitems = [
     title: "Tus Drones",
     icon: IconDrone,
     href: "/drones",
+  },
+  {
+    id: uniqueId(),
+    title: "Animales",
+    icon: IconPaw,
+    href: "/animales",
   },
   {
     id: uniqueId(),

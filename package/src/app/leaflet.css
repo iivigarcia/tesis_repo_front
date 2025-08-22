@@ -1,0 +1,46 @@
+/* Leaflet CSS */
+@import 'leaflet/dist/leaflet.css';
+
+/* Custom marker styles */
+.custom-marker {
+  background: transparent;
+  border: none;
+}
+
+.custom-marker div {
+  transition: all 0.2s ease;
+}
+
+.custom-marker:hover div {
+  transform: scale(1.2);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4) !important;
+}
+
+/* Popup styles */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.leaflet-popup-content {
+  margin: 8px 12px;
+  font-family: inherit;
+}
+
+.leaflet-popup-tip {
+  background: white;
+}
+
+/* Map container styles */
+.leaflet-container {
+  font-family: inherit;
+}
+
+.leaflet-control-attribution {
+  font-size: 10px;
+}
+
+/* Utility classes */
+.hidden {
+  display: none !important;
+}

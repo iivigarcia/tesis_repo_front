@@ -12,3 +12,4 @@ export * from './useReports';
 
 // Dashboard metrics hooks
 export * from './useDashboardMetrics';
+export * from './useAnimalsDaily';

@@ -97,11 +97,20 @@ export interface Report {
 }
 
 // 5. Animals Daily
+export interface Animal {
+  detectedAt: Timestamp;
+  geopoint: GeoPoint;
+  imageUrl: string;
+  type: string;
+  zoneId: string;
+}
+
 export interface AnimalsDaily {
   totalAnimals: number;
   growthPct: number;
   byZone: Record<string, number>;
   updatedAt: Timestamp;
+  animals: Animal[];
 }
 
 // 6. Dashboard Metrics
